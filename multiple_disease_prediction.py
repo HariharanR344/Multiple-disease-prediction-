@@ -8,11 +8,10 @@ from imblearn.under_sampling import RandomUnderSampler
 
 st.set_page_config(page_title="Multiple Disease Prediction", layout="centered")
 
-st.title("🩺 Multiple Disease Prediction System")
+st.title("Multiple Disease Prediction System")
 
-# =========================
 # Load Models
-# =========================
+
 with open("parkinsons_model.pkl", "rb") as f:
     parkinsons_model = pickle.load(f)
 
@@ -22,9 +21,8 @@ with open("kidney_model.pkl", "rb") as f:
 with open("liver_model.pkl", "rb") as f:
     liver_model = pickle.load(f)
 
-# =========================
 # Parkinson’s Scaler
-# =========================
+
 parkinsons_df = pd.read_csv(
     "https://raw.githubusercontent.com/HariharanR344/Multiple-disease-prediction-/refs/heads/main/parkinsons%20-%20parkinsons.csv"
 )
@@ -47,9 +45,8 @@ X_train_rus, y_train_rus = rus.fit_resample(X_train, y_train)
 parkinsons_scaler = MinMaxScaler()
 parkinsons_scaler.fit(X_train_rus)
 
-# =========================
 # Kidney Scaler
-# =========================
+
 kidney_df = pd.read_csv(
     "https://raw.githubusercontent.com/HariharanR344/Multiple-disease-prediction-/refs/heads/main/kidney_disease%20-%20kidney_disease.csv"
 )
@@ -89,25 +86,22 @@ A_train_rus, B_train_rus = rus.fit_resample(A_train, B_train)
 kidney_scaler = MinMaxScaler()
 kidney_scaler.fit(A_train_rus)
 
-# =========================
 # Liver Scaler
-# =========================
+
 with open("scaler (1).pkl", "rb") as f:
     liver_scaler = pickle.load(f)
 
-# =========================
 # Sidebar Navigation
-# =========================
+
 menu = st.sidebar.selectbox(
     "Select Disease",
     ["Parkinson's Disease", "Kidney Disease", "Liver Disease"]
 )
 
-# =========================
 # Parkinson’s Prediction
-# =========================
+
 if menu == "Parkinson's Disease":
-    st.subheader("🧠 Parkinson’s Disease Prediction")
+    st.subheader("Parkinson’s Disease Prediction")
 
     inputs = [st.number_input(f, format="%.6f") for f in parkinsons_features]
 
@@ -120,11 +114,10 @@ if menu == "Parkinson's Disease":
             "Parkinson's Disease Detected" if prediction == 1 else "No Parkinson's Disease"
         )
 
-# =========================
 # Kidney Prediction
-# =========================
+
 elif menu == "Kidney Disease":
-    st.subheader("🩸 Kidney Disease Prediction")
+    st.subheader("Kidney Disease Prediction")
 
     sc = st.number_input("Serum Creatinine(sc)")
     bu = st.number_input("Blood Urea(bu)")
@@ -154,11 +147,10 @@ elif menu == "Kidney Disease":
             "Kidney Disease Detected" if prediction == 0 else "No Kidney Disease"
         )
 
-# =========================
 # Liver Prediction
-# =========================
+
 else:
-    st.subheader("🫀 Liver Disease Prediction")
+    st.subheader("Liver Disease Prediction")
 
     age = st.number_input("Age")
     gender = st.radio("Gender", ["Male", "Female"])
